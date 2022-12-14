@@ -1,5 +1,5 @@
 import { LitElement, css, html } from 'lit'
-import litLogo from './assets/lit.svg'
+import litLogo from '../../assets/lit.svg'
 
 /**
  * An example element.
@@ -7,7 +7,7 @@ import litLogo from './assets/lit.svg'
  * @slot - This element has a slot
  * @csspart button - The button
  */
-export class MyElement extends LitElement {
+export default class MyElement extends LitElement {
   static get properties() {
     return {
       /**
