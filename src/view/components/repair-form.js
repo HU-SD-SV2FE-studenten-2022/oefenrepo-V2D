@@ -5,12 +5,25 @@ import RepairAssignment from './repair-assignment';
 import RepairProgress from './repair-progress';
 
 export default class RepairForm extends LitElement {
-  get styles() {
-    return css``;
+  static get styles() {
+    return css`
+      repair-progress {
+        display: none;
+      }
+
+      @media print {
+        repair-progress {
+          display: block;
+        }
+    `;
   }
 
   get properties() {
     return {};
+  }
+
+  #print() {
+    window.print();
   }
 
   render() {
@@ -20,6 +33,7 @@ export default class RepairForm extends LitElement {
         <repair-customer></repair-customer>
         <repair-assignment></repair-assignment>
         <repair-progress></repair-progress>
+        <button @click="${this.#print}">Print</button>
       </form>
     `;
   }
