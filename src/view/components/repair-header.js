@@ -1,18 +1,20 @@
 import { LitElement, css, html } from "lit";
 
 export default class RepairHeader extends LitElement {
-  get styles() {
+  static get styles() {
     return css``;
   }
 
-  get properties() {
-    return {};
+  static get properties() {
+    return {
+      reparatieid: { type: Number }
+    };
   }
 
   render() {
     return html`
       <fieldset>
-        <p>Datum: ${new Date().toLocaleDateString()}  Tijd: ${new Date().toLocaleTimeString()}</p>
+        <p>ID: ${this.reparatieid} Datum: ${new Date().toLocaleDateString()}  Tijd: ${new Date().toLocaleTimeString()}</p>
       </fieldset>
     `;
   }
