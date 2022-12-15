@@ -42,6 +42,11 @@ export default class RepairForm extends LitElement {
     this.addEventListener(ESTIMATE_TIME_CHANGED_EVENT, this.#EstimateTimeChangedHandler)
   }
 
+  disconnectedCallback() {
+    this.removeEventListener(ESTIMATE_TIME_CHANGED_EVENT, this.#EstimateTimeChangedHandler);
+    super.disconnectedCallback();
+  }
+
   #print() {
     window.print();
   }
