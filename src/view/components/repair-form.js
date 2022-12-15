@@ -24,6 +24,7 @@ export default class RepairForm extends LitElement {
   static get properties() {
     return {
       repairId: { type: Number },
+      timeestimation: { type: Number },
     };
   }
 

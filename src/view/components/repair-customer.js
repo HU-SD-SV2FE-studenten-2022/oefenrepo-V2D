@@ -15,7 +15,7 @@ export default class RepairCustomer extends LitElement {
         <legend>Klantgegevens</legend>
         <label for="customername">Naam:</label><input id="customername" name="customername" type="text">
         <label for="customertel">Tel:</label><input id="customertel" name="customertel" type="text">
-        <label for="customermail">Email:</label><input id="customermail" name="customermail" type="email">s
+        <label for="customermail">Email:</label><input id="customermail" name="customermail" type="email">
       </fieldset>
     `;
   }
