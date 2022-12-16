@@ -4,6 +4,7 @@ import RepairCustomer from './repair-customer';
 import RepairAssignment from './repair-assignment';
 import RepairProgress from './repair-progress';
 import RepairService from "../../service/repair-service";
+import Repair from "../../model/repair";
 
 const ESTIMATE_TIME_CHANGED_EVENT = 'estimate-time-changed';
 
@@ -42,12 +43,23 @@ export default class RepairForm extends LitElement {
     this.addEventListener(ESTIMATE_TIME_CHANGED_EVENT, this.#EstimateTimeChangedHandler)
   }
 
+  disconnectedCallback() {
+    this.removeEventListener(ESTIMATE_TIME_CHANGED_EVENT, this.#EstimateTimeChangedHandler);
+    super.disconnectedCallback();
+  }
+
   #print() {
     window.print();
   }
 
   #EstimateTimeChangedHandler(event) {
     this.timeestimation = event.detail.estimatedTime;
+  }
+
+  #addRepair(event) {
+    event.preventDefault();
+    this.repairService.addRepair(new Repair(this.repairId, this.timeestimation))
+      .then(() => window.location.href='/pages/dashboard.html');
   }
 
   render() {
@@ -58,6 +70,7 @@ export default class RepairForm extends LitElement {
         <repair-assignment></repair-assignment>
         <repair-progress></repair-progress>
         <button @click="${this.#print}">Print</button>
+        <button @click="${this.#addRepair}">Reparatie toevoegen</button>
       </form>
     `;
   }
