@@ -17,7 +17,7 @@ export default class RepairAssignment extends LitElement {
       composed: true,
       cancelable: true,
       detail: {
-        estimatedTime: event.target.value,
+        estimatedTime: Number(event.target.value),
       }
     });
     this.dispatchEvent(estimateTimeEvent);
