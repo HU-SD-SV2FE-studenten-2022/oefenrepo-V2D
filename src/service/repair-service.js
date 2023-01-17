@@ -1,3 +1,4 @@
+import { Subject } from "rxjs";
 import Repair from "../model/repair";
 
 const REPAIR_KEY = 'repairs';
@@ -5,7 +6,11 @@ const ID_KEY = 'nextRepairId';
 
 export default class RepairService {
 
-  constructor() {
+  static repairs$ = new Subject([]);
+
+  constructor(caller) {
+    this.caller = caller;
+    console.log(`constructor ${this.caller}`);
     this.nextId = Number(window.localStorage.getItem(ID_KEY));
     if (!this.nextId) {
       this.nextId = 0;
@@ -36,6 +41,7 @@ export default class RepairService {
     return new Promise((resolve) => {
       this.repairAssignments = [...this.repairAssignments, repairAssignment];
       window.localStorage.setItem(REPAIR_KEY, JSON.stringify(this.repairAssignments));
+      RepairService.repairs$.next(this.repairAssignments);
       resolve();
     });
   }
@@ -54,7 +60,17 @@ export default class RepairService {
     return new Promise((resolve) => {
       this.repairAssignments = this.repairAssignments.filter((repair) => repair.id !== id);
       window.localStorage.setItem(REPAIR_KEY, JSON.stringify(this.repairAssignments));
+      RepairService.repairs$.next(this.repairAssignments);
       resolve();
     })
+  }
+
+  triggerUpdate() {
+    console.log(`${this.caller}, triggerUpdate`);
+    this.repairAssignments = JSON.parse(window.localStorage.getItem(REPAIR_KEY));
+    if (!this.repairAssignments) {
+      this.repairAssignments = [];
+    }
+    RepairService.repairs$.next(this.repairAssignments);
   }
 }

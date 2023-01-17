@@ -17,7 +17,7 @@ export default class TotalTodoTime extends LitElement {
 
   constructor() {
     super();
-    this.repairService = new RepairService();
+    this.repairService = new RepairService(this.localName);
     this.repairAssignments = [];
   }
 

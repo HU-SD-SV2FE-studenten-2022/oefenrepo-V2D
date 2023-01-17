@@ -21,27 +21,26 @@ export default class TodoList extends LitElement {
 
   constructor() {
     super();
-    this.repairService = new RepairService();
+    this.repairService = new RepairService(this.localName);
     this.repairAssignments = [];
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.repairService.getRepairs().then((repairs) => {
-      this.repairAssignments = repairs;
-    });
-    this.addEventListener(REPAIR_ASSIGNMENTS_UPDATE_EVENT, this.#repairAssignmentsUpdateHandler);
+
+    this.observer = {
+      next: (repairArray) => { 
+        console.log('observer', repairArray);
+        this.repairAssignments = repairArray; 
+      },
+    }
+    RepairService.repairs$.subscribe(this.observer);
+    this.repairService.triggerUpdate();
   }
 
   disconnectedCallback() {
-    this.removeEventListener(REPAIR_ASSIGNMENTS_UPDATE_EVENT, this.#repairAssignmentsUpdateHandler);
+    RepairService.repairs$.unsubscribe();
     super.disconnectedCallback();
-  }
-
-  #repairAssignmentsUpdateHandler(event) {
-    this.repairService.getRepairs().then((repairs) => {
-      this.repairAssignments = repairs;
-    });
   }
 
   render() {
